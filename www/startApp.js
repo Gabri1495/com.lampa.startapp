@@ -86,7 +86,7 @@ module.exports = {
 	hasExtra: function(extraValue, completeCallback, errorCallback) {
 		this.getExtra(extraValue, completeCallback, errorCallback);
 	},
-	connectOvpn: function(extraValue, completeCallback, errorCallback) {
-		exec(completeCallback, errorCallback, "startApp", "connectOvpn", extraValue);
+	connectOvpn: function(profileName, completeCallback, errorCallback) {
+		exec(completeCallback, errorCallback, "startApp", "connectOvpn", [profileName]);
 	}
 }
