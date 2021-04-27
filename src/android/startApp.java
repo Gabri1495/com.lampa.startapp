@@ -56,6 +56,9 @@ public class startApp extends Assets {
 		else if(action.equals("getExtra")) {
 			this.getExtra(args, callbackContext);
 		}
+		else if(action.equals("connectOvpn")) {
+			this.connectOvpn(args, callbackContext);
+		}
 
         return true;
     }
@@ -375,6 +378,27 @@ public class startApp extends Assets {
 			else {
 				callback.error("extra field not found");	
 			}
+		}
+		catch(JSONException e) {
+			callback.error(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * connectOvpn
+	 */
+	private void connectOvpn(JSONArray args, CallbackContext callback) {
+		try {
+			String profile = args.getString(0);
+			Intent openVPN = new Intent("android.intent.action.VIEW");
+			openVPN.setClassName("net.openvpn.openvpn", "net.openvpn.unified.MainActivity");
+			openVPN.putExtra("net.openvpn.openvpn.AUTOSTART_PROFILE_NAME", "PC " + profile);
+			openVPN.putExtra("net.openvpn.openvpn.AUTOCONNECT", true);
+			openVPN.putExtra("net.openvpn.openvpn.APP_SECTION", "PC");
+			cordova.getActivity().startActivity(openVPN);
+			
+			callback.success(profile);
 		}
 		catch(JSONException e) {
 			callback.error(e.getMessage());
